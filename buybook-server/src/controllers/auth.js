@@ -39,8 +39,7 @@ export const register = async (req, res) => {
       message: 'Регистрация прошла успешно.'
     })
   } catch (error) {
-    res.status(400)
-    res.json({ message: 'Ошибка при создании пользователя.' })
+    res.status(400).json({ message: 'Ошибка при создании пользователя.' })
   }
 }
 

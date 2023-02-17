@@ -1,6 +1,7 @@
 import Genre from '../models/Genre.js'
+import Book from '../models/Book.js'
 
-export const getAll = async (req, res) => {
+export const getAllGenres = async (req, res) => {
   try {
     const genres = await Genre.find()
 
@@ -37,6 +38,26 @@ export const removeGenre = async (req, res) => {
     }
 
     res.json({ message: 'Жанр удалён' })
+  } catch (error) {
+    res.status(400).json({ message: 'Что-то пошло не так.' })
+  }
+}
+
+export const getBookByGenre = async (req, res) => {
+  try {
+    const genre = await Genre.findById(req.params.id)
+
+    if (!genre) {
+      return res.json({ message: 'Такого жанра нет' })
+    }
+
+    const list = await Promise.all(
+      genre.books.map((book) => {
+        return Book.findById(book)
+      })
+    )
+
+    res.json(list)
   } catch (error) {
     res.status(400).json({ message: 'Что-то пошло не так.' })
   }

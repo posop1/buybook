@@ -29,6 +29,7 @@ app.use('/api/genre', genreRoute)
 
 const connectDataBase = async () => {
   try {
+    mongoose.set('strictQuery', false)
     mongoose.connect(
       `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.k0aofua.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
     )
