@@ -2,8 +2,10 @@ import Book from '../models/Book.js'
 import Genre from '../models/Genre.js'
 import Comment from '../models/Comment.js'
 import User from '../models/User.js'
+import { Request, Response } from 'express'
+import { IBookParams, IBookQuery, IBookReq } from '../types/books.js'
 
-export const createBook = async (req, res) => {
+export const createBook = async (req: Request<never, never, IBookReq>, res: Response) => {
   try {
     const { title, description, author, imgUrl, rating, genres } = req.body
 
@@ -28,7 +30,7 @@ export const createBook = async (req, res) => {
   }
 }
 
-export const getAll = async (req, res) => {
+export const getAll = async (req: Request<never, never, never, IBookQuery>, res: Response) => {
   try {
     const { sortQuery, page = 1, limit = 10 } = req.query
     const books = await Book.find()
@@ -53,7 +55,7 @@ export const getAll = async (req, res) => {
   }
 }
 
-export const removeBook = async (req, res) => {
+export const removeBook = async (req: Request<IBookParams>, res: Response) => {
   try {
     const book = await Book.findByIdAndDelete(req.params.id)
 
@@ -67,7 +69,7 @@ export const removeBook = async (req, res) => {
   }
 }
 
-export const getBookById = async (req, res) => {
+export const getBookById = async (req: Request<IBookParams>, res: Response) => {
   try {
     const book = await Book.findByIdAndUpdate(req.params.id, {
       $inc: { views: 1 }
@@ -83,7 +85,7 @@ export const getBookById = async (req, res) => {
   }
 }
 
-export const getBookComments = async (req, res) => {
+export const getBookComments = async (req: Request<IBookParams>, res: Response) => {
   try {
     const book = await Book.findById(req.params.id)
 
@@ -103,7 +105,7 @@ export const getBookComments = async (req, res) => {
   }
 }
 
-export const getBookGenres = async (req, res) => {
+export const getBookGenres = async (req: Request<IBookParams>, res: Response) => {
   try {
     const book = await Book.findById(req.params.id)
 
@@ -123,10 +125,18 @@ export const getBookGenres = async (req, res) => {
   }
 }
 
-export const getFavoriteBook = async (req, res) => {
+export const getFavoriteBook = async (
+  req: Request<never, never, never, IBookQuery>,
+  res: Response
+) => {
   try {
     const { sortQuery, page = 1, limit = 10 } = req.query
     const user = await User.findById(req.headers.userId)
+
+    if (!user) {
+      return res.status(404).json({ message: 'Пользовательно не найден' })
+    }
+
     const list = await Promise.all(
       user.favoriteBooks.map((book) => {
         return Book.findById(book)
@@ -154,9 +164,14 @@ export const getFavoriteBook = async (req, res) => {
   }
 }
 
-export const addFavoriteBook = async (req, res) => {
+export const addFavoriteBook = async (req: Request<IBookParams>, res: Response) => {
   try {
     const book = await Book.findById(req.params.id)
+
+    if (!book) {
+      return res.status(404).json({ message: 'Такой книги нет' })
+    }
+
     await User.findByIdAndUpdate(req.headers.userId, {
       $push: { favoriteBooks: book }
     })

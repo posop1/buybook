@@ -1,13 +1,18 @@
+import { RequestHandler } from 'express'
 import jwt from 'jsonwebtoken'
+import { JwtPayload } from '../types/common'
 
-export const checkAuth = (req, res, next) => {
+export const checkAuth: RequestHandler = (req, res, next) => {
   const token = (req.headers.authorization || '').replace(/Bearer\s?/, '')
 
   if (token) {
     try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET)
+      if (!process.env.JWT_SECRET) {
+        throw new Error('JWT_SECRET not found')
+      }
+      const { id } = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload
 
-      req.headers.userId = decoded.id
+      req.headers.userId = id
 
       next()
     } catch (error) {

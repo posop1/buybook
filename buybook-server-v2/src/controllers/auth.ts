@@ -1,9 +1,11 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import User from '../models/User.js'
+import { Request, Response } from 'express'
+import { ILoginReq } from '../types/auth.js'
 
 // Register user
-export const register = async (req, res) => {
+export const register = async (req: Request<never, never, ILoginReq>, res: Response) => {
   try {
     const { username, password } = req.body
 
@@ -27,7 +29,7 @@ export const register = async (req, res) => {
       {
         id: newUser._id
       },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET as string,
       { expiresIn: '30d' }
     )
 
@@ -44,7 +46,7 @@ export const register = async (req, res) => {
 }
 
 // Login user
-export const login = async (req, res) => {
+export const login = async (req: Request<never, never, ILoginReq>, res: Response) => {
   try {
     const { username, password } = req.body
     const user = await User.findOne({ username })
@@ -67,7 +69,7 @@ export const login = async (req, res) => {
       {
         id: user._id
       },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET as string,
       { expiresIn: '30d' }
     )
 
@@ -82,7 +84,7 @@ export const login = async (req, res) => {
 }
 
 // Get Me
-export const getMe = async (req, res) => {
+export const getMe = async (req: Request, res: Response) => {
   try {
     const user = await User.findById(req.headers.userId)
 
@@ -96,7 +98,7 @@ export const getMe = async (req, res) => {
       {
         id: user._id
       },
-      process.env.JWT_SECRET,
+      process.env.JWT_SECRET as string,
       { expiresIn: '30d' }
     )
 
