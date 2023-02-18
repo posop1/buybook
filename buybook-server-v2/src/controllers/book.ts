@@ -1,11 +1,11 @@
-import Book from '../models/Book.js'
-import Genre from '../models/Genre.js'
-import Comment from '../models/Comment.js'
-import User from '../models/User.js'
+import Book from '../models/Book'
+import Genre from '../models/Genre'
+import Comment from '../models/Comment'
+import User from '../models/User'
 import { Request, Response } from 'express'
-import { IBookParams, IBookQuery, IBookReq } from '../types/books.js'
+import { IBookParams, IBookQuery, IBookBody } from '../types/books.js'
 
-export const createBook = async (req: Request<never, never, IBookReq>, res: Response) => {
+export const createBook = async (req: Request<never, never, IBookBody>, res: Response) => {
   try {
     const { title, description, author, imgUrl, rating, genres } = req.body
 
@@ -125,10 +125,7 @@ export const getBookGenres = async (req: Request<IBookParams>, res: Response) =>
   }
 }
 
-export const getFavoriteBook = async (
-  req: Request<never, never, never, IBookQuery>,
-  res: Response
-) => {
+export const getFavoriteBook = async (req: Request, res: Response) => {
   try {
     const { sortQuery, page = 1, limit = 10 } = req.query
     const user = await User.findById(req.headers.userId)
@@ -140,9 +137,9 @@ export const getFavoriteBook = async (
     const list = await Promise.all(
       user.favoriteBooks.map((book) => {
         return Book.findById(book)
-          .sort(sortQuery)
-          .limit(limit * 1)
-          .skip((page - 1) * limit)
+          .sort(String(sortQuery))
+          .limit(Number(limit) * 1)
+          .skip((Number(page) - 1) * Number(limit))
           .exec()
       })
     )
@@ -158,13 +155,13 @@ export const getFavoriteBook = async (
     )
     const sumCount = count.reduce((acc, number) => acc + number, 0)
 
-    res.json({ books: list, totalPages: Math.ceil(sumCount / limit), currentPage: page })
+    res.json({ books: list, totalPages: Math.ceil(sumCount / Number(limit)), currentPage: page })
   } catch (error) {
     res.status(400).json({ message: 'Что-то пошло не так.' })
   }
 }
 
-export const addFavoriteBook = async (req: Request<IBookParams>, res: Response) => {
+export const addFavoriteBook = async (req: Request, res: Response) => {
   try {
     const book = await Book.findById(req.params.id)
 

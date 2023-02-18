@@ -2,10 +2,10 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import mongoose from 'mongoose'
-import authRoute from './routes/auth.ts'
-import commentRoute from './routes/comments.ts'
-import bookRoute from './routes/book.ts'
-import genreRoute from './routes/genres.ts'
+import authRoute from './routes/auth'
+import commentRoute from './routes/comments'
+import bookRoute from './routes/book'
+import genreRoute from './routes/genres'
 
 const app = express()
 

@@ -1,7 +1,9 @@
-import Comment from '../models/Comment.js'
-import Book from '../models/Book.js'
+import Comment from '../models/Comment'
+import Book from '../models/Book'
+import { Request, Response } from 'express'
+import { ICommentsBody } from '../types/comments'
 
-export const createComment = async (req, res) => {
+export const createComment = async (req: Request<never, never, ICommentsBody>, res: Response) => {
   try {
     const { bookId, comment } = req.body
 

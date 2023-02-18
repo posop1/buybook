@@ -1,7 +1,12 @@
-import Genre from '../models/Genre.js'
-import Book from '../models/Book.js'
+import Genre from '../models/Genre'
+import Book from '../models/Book'
+import { Request, Response } from 'express'
+import { IGenreBody, IGenreParams, IAllGenreQuery, IBookByGenreQuery } from '../types/genres'
 
-export const getAllGenres = async (req, res) => {
+export const getAllGenres = async (
+  req: Request<never, never, never, IAllGenreQuery>,
+  res: Response
+) => {
   try {
     const { limit } = req.query
     const genres = await Genre.find()
@@ -18,7 +23,7 @@ export const getAllGenres = async (req, res) => {
   }
 }
 
-export const createGenre = async (req, res) => {
+export const createGenre = async (req: Request<never, never, IGenreBody>, res: Response) => {
   try {
     const { name } = req.body
 
@@ -32,7 +37,7 @@ export const createGenre = async (req, res) => {
   }
 }
 
-export const removeGenre = async (req, res) => {
+export const removeGenre = async (req: Request<IGenreParams>, res: Response) => {
   try {
     const genre = await Genre.findByIdAndDelete(req.params.id)
 
@@ -46,7 +51,10 @@ export const removeGenre = async (req, res) => {
   }
 }
 
-export const getBookByGenre = async (req, res) => {
+export const getBookByGenre = async (
+  req: Request<IGenreParams, never, never, IBookByGenreQuery>,
+  res: Response
+) => {
   try {
     const { sortQuery, page = 1, limit = 10 } = req.query
     const genre = await Genre.findById(req.params.id)

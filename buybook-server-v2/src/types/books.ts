@@ -1,4 +1,4 @@
-export interface IBookReq {
+export interface IBookBody {
   title: string
   description: string
   author: string

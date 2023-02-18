@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
-import User from '../models/User.js'
+import User from '../models/User'
 import { Request, Response } from 'express'
-import { ILoginReq } from '../types/auth.js'
+import { ILoginReq } from '../types/auth'
 
 // Register user
 export const register = async (req: Request<never, never, ILoginReq>, res: Response) => {
