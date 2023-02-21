@@ -9,7 +9,7 @@
         type="text"
         placeholder="Логин..."
         class="login__inp"
-        v-model="login"
+        v-model="username"
       />
     </div>
     <div class="inp__container">
@@ -40,34 +40,61 @@
       </RouterLink>
     </div>
     <ValidateError v-if="isValidateError" />
+    <span
+      v-if="status"
+      class="status"
+      >{{ status }}</span
+    >
     <button
       class="submit"
       @click="submitHandler"
+      v-if="!isLoading"
     >
       Войти
+    </button>
+    <button
+      class="submit"
+      @click="submitHandler"
+      v-else
+    >
+      <HollowDotsSpinner
+        :animation-duration="500"
+        :dot-size="15"
+        :dots-num="3"
+        color="#000"
+      />
     </button>
   </form>
 </template>
 
 <script setup lang="ts">
+import { HollowDotsSpinner } from 'epic-spinners'
 import EyeIcon from '@/components/icons/EyeIcon.vue'
 import CloseEyeIcon from '@/components/icons/CloseEyeIcon.vue'
 import ValidateError from './ValidateError.vue'
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+import { useStore } from 'vuex'
+import { key } from '@/store/store'
+import { useRouter } from 'vue-router'
+
+const store = useStore(key)
+const router = useRouter()
 
 const isVisiblePassword = ref(false)
 const isValidateError = ref(false)
+const isLoading = ref(false)
 
-const login = ref('')
+const username = ref('')
 const password = ref('')
 const repeatPassword = ref('')
+const status = ref('')
 
 const visibleHandler = () => {
   isVisiblePassword.value = !isVisiblePassword.value
 }
 
 const submitHandler = () => {
-  if (!login.value || !password.value) {
+  if (!username.value || !password.value) {
     isValidateError.value = true
     return
   } else if (password.value !== repeatPassword.value) {
@@ -75,14 +102,23 @@ const submitHandler = () => {
     return
   } else {
     isValidateError.value = false
+    isLoading.value = true
+
+    store.dispatch('registerUser', { username: username.value, password: password.value })
+    isLoading.value = false
   }
 
-  //TODO: Доделать логин и регистарцию (vuex)
-
   password.value = ''
-  login.value = ''
+  username.value = ''
   repeatPassword.value = ''
+  status.value = store.getters.getUserStatus
 }
+
+watch(
+  () => store.getters.checkAuth,
+  () => router.push('/'),
+  { deep: true }
+)
 </script>
 
 <style lang="scss" scoped>
@@ -168,6 +204,11 @@ const submitHandler = () => {
         text-decoration: underline;
       }
     }
+  }
+  .status {
+    font-size: 14px;
+    color: #f33f3f;
+    text-align: center;
   }
 }
 </style>

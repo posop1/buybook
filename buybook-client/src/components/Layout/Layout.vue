@@ -6,7 +6,7 @@
         <RouterView />
       </div>
     </div>
-    <div class="">
+    <div class="ref__container">
       <Footer />
     </div>
   </div>
@@ -31,5 +31,6 @@ import Footer from './Footer/Footer.vue'
 }
 .ref__container {
   width: 100%;
+  margin-left: 280px;
 }
 </style>

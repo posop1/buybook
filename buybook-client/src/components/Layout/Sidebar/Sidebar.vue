@@ -8,13 +8,13 @@
         <h1>BuyBook</h1>
       </RouterLink>
       <hr />
-      <div>
-        <RouterLink
-          to="/login"
+      <div v-if="store.getters.checkAuth === true">
+        <button
           class="sub__link"
+          @click="() => store.dispatch('logout')"
         >
-          <LogInIcon />
-        </RouterLink>
+          <Logout />
+        </button>
         <RouterLink
           to="/favorite"
           class="sub__link"
@@ -26,6 +26,14 @@
           class="sub__link"
         >
           <CartIcon />
+        </RouterLink>
+      </div>
+      <div v-else>
+        <RouterLink
+          to="/login"
+          class="sub__link"
+        >
+          <LogInIcon />
         </RouterLink>
       </div>
     </div>
@@ -42,6 +50,7 @@
       to="/1"
       class="link"
       active-class="active__link"
+      v-if="store.getters.checkAuth"
     >
       <span><MyBookIcon /></span>
       Мои книги
@@ -82,6 +91,11 @@ import MyBookIcon from '@/components/icons/MyBookIcon.vue'
 import PopularIcon from '@/components/icons/PopularIcon.vue'
 import GenresIcon from '@/components/icons/GenresIcon.vue'
 import EyeIcon from '@/components/icons/EyeIcon.vue'
+import Logout from '@/components/icons/Logout.vue'
+import { useStore } from 'vuex'
+import { key } from '@/store/store'
+
+const store = useStore(key)
 </script>
 
 <style lang="scss" scoped>
@@ -119,6 +133,9 @@ import EyeIcon from '@/components/icons/EyeIcon.vue'
 
   .sub__link {
     transition: 0.2s ease-in-out;
+    background: none;
+    border: none;
+    color: white;
     &:hover {
       opacity: 0.6;
     }
