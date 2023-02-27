@@ -136,6 +136,7 @@ const store = useStore(key)
     background: none;
     border: none;
     color: white;
+    cursor: pointer;
     &:hover {
       opacity: 0.6;
     }
@@ -151,6 +152,7 @@ hr {
   align-items: center;
   margin-bottom: 5px;
   gap: 10px;
+  cursor: pointer;
 
   transition: 0.2s ease-in-out;
 

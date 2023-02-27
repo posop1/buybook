@@ -10,6 +10,7 @@
         placeholder="Логин..."
         class="login__inp"
         v-model="username"
+        v-focus
       />
     </div>
     <div class="inp__container">
@@ -17,6 +18,7 @@
         :type="isVisiblePassword ? 'text' : 'password'"
         placeholder="Пароль..."
         class="pass__inp"
+        @keypress.enter="submitHandler"
         v-model="password"
       />
       <button @click="visibleHandler">
@@ -47,6 +49,7 @@
     <button
       class="submit"
       @click="submitHandler"
+      disabled
       v-else
     >
       <HollowDotsSpinner
@@ -60,6 +63,7 @@
 </template>
 
 <script setup lang="ts">
+import { vFocus } from '@/directives/'
 import { HollowDotsSpinner } from 'epic-spinners'
 import EyeIcon from '@/components/icons/EyeIcon.vue'
 import CloseEyeIcon from '@/components/icons/CloseEyeIcon.vue'
@@ -103,7 +107,7 @@ const submitHandler = async () => {
 }
 
 watch(
-  () => localStorage.getItem('token'),
+  () => store.getters.checkAuth,
   () => router.push('/'),
   { deep: true }
 )

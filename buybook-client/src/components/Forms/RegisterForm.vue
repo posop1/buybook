@@ -10,6 +10,7 @@
         placeholder="Логин..."
         class="login__inp"
         v-model="username"
+        v-focus
       />
     </div>
     <div class="inp__container">
@@ -68,6 +69,7 @@
 </template>
 
 <script setup lang="ts">
+import { vFocus } from '@/directives/'
 import { HollowDotsSpinner } from 'epic-spinners'
 import EyeIcon from '@/components/icons/EyeIcon.vue'
 import CloseEyeIcon from '@/components/icons/CloseEyeIcon.vue'
