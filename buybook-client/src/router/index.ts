@@ -30,6 +30,21 @@ const routes: Array<RouteRecordRaw> = [
     }
   },
   {
+    path: '/new',
+    name: 'new',
+    component: () => import('@/views/Books/New.vue')
+  },
+  {
+    path: '/popular',
+    name: 'popular',
+    component: () => import('@/views/Books/Popular.vue')
+  },
+  {
+    path: '/genres',
+    name: 'genres',
+    component: () => import('@/views/Books/Genres/Genres.vue')
+  },
+  {
     path: '/login',
     name: 'login',
     component: () => import('@/views/Auth/Login.vue')
