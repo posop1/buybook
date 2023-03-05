@@ -38,6 +38,10 @@ const routes: Array<RouteRecordRaw> = [
     path: '/register',
     name: 'register',
     component: () => import('@/views/Auth/Register.vue')
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/views/NotFound.vue')
   }
 ]
 

@@ -4,6 +4,6 @@ import { checkAuth } from '../utils/checkAuth'
 
 const router = Router()
 
-router.post('/:id', checkAuth, createComment)
+router.post('/', checkAuth, createComment)
 
 export default router

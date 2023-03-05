@@ -7,7 +7,7 @@ import { IBookParams, IBookQuery, IBookBody } from '../types/books.js'
 
 export const createBook = async (req: Request<never, never, IBookBody>, res: Response) => {
   try {
-    const { title, description, author, imgUrl, rating, genres } = req.body
+    const { title, description, author, imgUrl, rating, genres, price } = req.body
 
     const newBook = new Book({
       title,
@@ -15,6 +15,7 @@ export const createBook = async (req: Request<never, never, IBookBody>, res: Res
       author,
       imgUrl,
       rating,
+      price,
       genres
     })
 
@@ -32,7 +33,7 @@ export const createBook = async (req: Request<never, never, IBookBody>, res: Res
 
 export const getAll = async (req: Request<never, never, never, IBookQuery>, res: Response) => {
   try {
-    const { sortQuery, page = 1, limit = 10 } = req.query
+    const { sortQuery, page = 1, limit = 20 } = req.query
     const books = await Book.find()
       .sort(sortQuery)
       .limit(limit * 1)
@@ -127,7 +128,7 @@ export const getBookGenres = async (req: Request<IBookParams>, res: Response) =>
 
 export const getFavoriteBook = async (req: Request, res: Response) => {
   try {
-    const { sortQuery, page = 1, limit = 10 } = req.query
+    const { sortQuery, page = 1, limit = 20 } = req.query
     const user = await User.findById(req.headers.userId)
 
     if (!user) {

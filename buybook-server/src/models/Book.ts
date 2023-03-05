@@ -8,6 +8,7 @@ const BookSchema = new mongoose.Schema(
     imgUrl: { type: String, required: true },
     rating: { type: Number, required: true },
     views: { type: Number, default: 0 },
+    price: { type: Number, default: 0 },
     genres: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Genre' }],
     comments: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' }]
   },

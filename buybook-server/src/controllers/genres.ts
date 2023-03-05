@@ -56,7 +56,7 @@ export const getBookByGenre = async (
   res: Response
 ) => {
   try {
-    const { sortQuery, page = 1, limit = 10 } = req.query
+    const { sortQuery, page = 1, limit = 20 } = req.query
     const genre = await Genre.findById(req.params.id)
 
     if (!genre) {

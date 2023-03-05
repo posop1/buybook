@@ -4,6 +4,7 @@ export interface IBookBody {
   author: string
   imgUrl: string
   rating: number
+  price: number
   genres: string[]
 }
 

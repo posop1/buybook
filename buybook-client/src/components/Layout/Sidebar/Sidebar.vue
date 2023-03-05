@@ -47,7 +47,7 @@
       Главная
     </RouterLink>
     <RouterLink
-      to="/1"
+      to="/favorite"
       class="link"
       active-class="active__link"
       v-if="store.getters.checkAuth"

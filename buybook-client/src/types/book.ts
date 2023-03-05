@@ -6,6 +6,7 @@ export interface IBook {
   imgUrl: string
   rating: number
   views: number
+  price: number
   genres: string[]
   comments: string[]
   createdAt: Date
@@ -23,4 +24,10 @@ export interface IGenres {
 export interface IComment {
   postId: string
   comment: string
+}
+
+export interface IFetchBooks {
+  books: IBook[]
+  totalPage: number
+  currentPage: number
 }

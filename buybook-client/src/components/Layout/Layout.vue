@@ -6,9 +6,6 @@
         <RouterView />
       </div>
     </div>
-    <div class="ref__container">
-      <Footer />
-    </div>
   </div>
 </template>
 

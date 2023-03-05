@@ -5,6 +5,7 @@ import {
   getAll,
   getBookById,
   getBookComments,
+  getBookGenres,
   getFavoriteBook,
   removeBook
 } from '../controllers/book'
@@ -17,6 +18,7 @@ router.get('/', getAll)
 router.get('/:id', getBookById)
 router.delete('/:id', removeBook)
 router.get('/:id/comments', getBookComments)
+router.get('/:id/genres', getBookGenres)
 router.get('/user/favorite', checkAuth, getFavoriteBook)
 router.post('/user/favorite/:id', checkAuth, addFavoriteBook)
 
