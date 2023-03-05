@@ -56,7 +56,7 @@
       Мои книги
     </RouterLink>
     <RouterLink
-      to="/1"
+      to="/popular"
       class="link"
       active-class="active__link"
     >
@@ -64,7 +64,7 @@
       Популярное
     </RouterLink>
     <RouterLink
-      to="/1"
+      to="/new"
       class="link"
       active-class="active__link"
     >
@@ -72,7 +72,7 @@
       Новое
     </RouterLink>
     <RouterLink
-      to="/1"
+      to="/genres"
       class="link"
       active-class="active__link"
     >
