@@ -7,10 +7,12 @@
       class="badges"
     >
       <BookBadgeList
+        :to="'/new'"
         :title="'Новые книги'"
         :books="newBooks"
       />
       <BookBadgeList
+        :to="'/popular'"
         :title="'Популярные книги'"
         :books="popularBooks"
       />

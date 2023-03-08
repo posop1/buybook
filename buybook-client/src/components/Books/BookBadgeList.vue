@@ -3,7 +3,7 @@
     <div class="title">
       <h3>{{ title }}</h3>
       <RouterLink
-        to="/new"
+        :to="to"
         class="link"
         >Подробнее</RouterLink
       >
@@ -26,9 +26,10 @@ import BookItem from './BookItem.vue'
 interface BookBadgeListProps {
   title: string
   books?: IBook[]
+  to: string
 }
 
-const { title, books } = defineProps<BookBadgeListProps>()
+const { title, books, to } = defineProps<BookBadgeListProps>()
 </script>
 
 <style lang="scss" scoped>
