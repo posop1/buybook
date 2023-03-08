@@ -34,6 +34,7 @@ export const createBook = async (req: Request<never, never, IBookBody>, res: Res
 export const getAll = async (req: Request<never, never, never, IBookQuery>, res: Response) => {
   try {
     const { sortQuery, page = 1, limit = 20 } = req.query
+
     const books = await Book.find()
       .sort(sortQuery)
       .limit(limit * 1)
