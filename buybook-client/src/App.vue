@@ -14,3 +14,14 @@ onMounted(() => {
   store.dispatch('getMe')
 })
 </script>
+
+<style lang="scss">
+.container {
+  padding: 20px;
+
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+</style>
