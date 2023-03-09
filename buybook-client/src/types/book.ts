@@ -14,13 +14,6 @@ export interface IBook {
   __v: number
 }
 
-export interface IGenres {
-  _id: string
-  name: string
-  books: string[]
-  __v: number
-}
-
 export interface IComment {
   postId: string
   comment: string

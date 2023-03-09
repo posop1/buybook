@@ -26,9 +26,10 @@
 
 <script setup lang="ts">
 import api from '@/api/instance'
-import { IBook, IGenres } from '@/types/book'
+import { IBook } from '@/types/book'
 import { ref, onMounted } from 'vue'
 import Star from '@/components/icons/Star.vue'
+import { IGenre } from '@/types/genre'
 
 interface BookItemProps {
   book: IBook | undefined
@@ -36,11 +37,11 @@ interface BookItemProps {
 
 const { book } = defineProps<BookItemProps>()
 
-const genres = ref<IGenres[]>()
+const genres = ref<IGenre[]>()
 
 const fetchGenres = async () => {
   try {
-    const { data } = await api.get<IGenres[]>(`/book/${book?._id}/genres`)
+    const { data } = await api.get<IGenre[]>(`/book/${book?._id}/genres`)
 
     genres.value = data
   } catch (error) {
