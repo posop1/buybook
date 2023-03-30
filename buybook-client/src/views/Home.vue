@@ -16,6 +16,11 @@
         :title="'Популярные книги'"
         :books="popularBooks"
       />
+      <GenreBadgeList
+        :title="'Жанры'"
+        :to="'/genres'"
+        :genres="genres"
+      />
     </div>
   </div>
 </template>
@@ -28,9 +33,12 @@ import Error from '@/components/Error.vue'
 import { IBook, IFetchBooks } from '@/types/book'
 import { TStatus } from '@/types/commonTypes'
 import { ref, onMounted } from 'vue'
+import GenreBadgeList from '@/components/Genres/GenreBadgeList.vue'
+import { IGenre } from '@/types/genre'
 
 const newBooks = ref<IBook[]>()
 const popularBooks = ref<IBook[]>()
+const genres = ref<IGenre[]>()
 
 const status = ref<TStatus>('loading')
 
@@ -70,9 +78,23 @@ const fetchPopularBooks = async () => {
   }
 }
 
+const fetchGenres = async () => {
+  try {
+    status.value = 'loading'
+    const { data } = await api.get<IGenre[]>('/genre')
+
+    genres.value = data
+    status.value = 'complete'
+  } catch (error) {
+    console.log(error)
+    status.value = 'error'
+  }
+}
+
 onMounted(() => {
   fetchNewBooks()
   fetchPopularBooks()
+  fetchGenres()
 })
 </script>
 
