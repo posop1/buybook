@@ -30,7 +30,7 @@ const { genre } = defineProps<GenreItemProps>()
 
 .genre {
   width: 100%;
-  height: 100%;
+  min-height: 200px;
   background: #f33f3f;
   display: flex;
   justify-content: center;
