@@ -1,5 +1,5 @@
 import api from '@/api/instance'
-import { ActionsParams, AuthState, ILoginFetch, IRegisterFetch, fetchParams } from './types'
+import { ActionsParams, ILoginFetch, IRegisterFetch, fetchParams } from './types'
 
 export const registerUser = async (
   { commit }: ActionsParams,

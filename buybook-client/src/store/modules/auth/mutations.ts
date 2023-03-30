@@ -1,8 +1,8 @@
 import { IUser } from '@/types/user'
-import { AuthState } from './types'
+import { IAuthState } from './types'
 
 export const setUser = (
-  state: AuthState,
+  state: IAuthState,
   payload: { status: string; user: IUser; token: string }
 ) => {
   state.user = payload.user
@@ -10,7 +10,7 @@ export const setUser = (
   state.status = payload.status
 }
 
-export const logoutUser = (state: AuthState) => {
+export const logoutUser = (state: IAuthState) => {
   state.user = null
   state.token = null
   localStorage.removeItem('token')

@@ -1,7 +1,7 @@
 import { IUser } from '@/types/user'
 import { Commit } from 'vuex'
 
-export interface AuthState {
+export interface IAuthState {
   user: IUser | null
   token: string | null
   status: string | null
