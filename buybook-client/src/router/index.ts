@@ -14,9 +14,14 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import('@/views/About.vue')
   },
   {
+    path: '/book/:id',
+    name: 'book',
+    component: () => import('@/views/Books/Book.vue')
+  },
+  {
     path: '/cart',
     name: 'cart',
-    component: () => import('@/views/Cart.vue'),
+    component: () => import('@/views/Books/Cart.vue'),
     meta: {
       requiresAuth: true
     }
@@ -24,7 +29,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/favorite',
     name: 'favorite',
-    component: () => import('@/views/Favorite.vue'),
+    component: () => import('@/views/Books/Favorite.vue'),
     meta: {
       requiresAuth: true
     }
@@ -42,7 +47,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/genres',
     name: 'genres',
-    component: () => import('@/views/Books/Genres/Genres.vue')
+    component: () => import('@/views/Genres/Genres.vue')
   },
   {
     path: '/login',

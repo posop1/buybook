@@ -1,3 +1,3 @@
 import { ICartState } from './types'
 
-export const getBooksInCar = (state: ICartState) => state.books
+export const getBooksInCart = (state: ICartState) => state.books

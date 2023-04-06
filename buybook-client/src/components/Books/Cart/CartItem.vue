@@ -22,21 +22,30 @@
       <span class="price">{{ book?.price }}р.</span>
       <span class="rating"><StarIcon /> {{ book?.rating }}</span>
     </div>
+    <button
+      class="btn"
+      @click="removeHandler"
+    >
+      Удалить из корзины
+    </button>
   </div>
 </template>
 
 <script setup lang="ts">
-import api from '@/api/instance'
 import { IBook } from '@/types/book'
+import StarIcon from '@/components/icons/StarIcon.vue'
 import { onMounted, ref } from 'vue'
 import { IGenre } from '@/types/genre'
-import StarIcon from '@/components/icons/StarIcon.vue'
+import api from '@/api/instance'
+import { key } from '@/store/store'
+import { useStore } from 'vuex'
 
-interface BookItemProps {
-  book: IBook | undefined
+interface CartItemProps {
+  book: IBook
 }
 
-const { book } = defineProps<BookItemProps>()
+const { book } = defineProps<CartItemProps>()
+const store = useStore(key)
 
 const genres = ref<IGenre[]>()
 
@@ -50,12 +59,16 @@ const fetchGenres = async () => {
   }
 }
 
+const removeHandler = () => {
+  store.dispatch('removeBookInCart', book)
+}
+
 onMounted(() => {
   fetchGenres()
 })
 </script>
 
-<style lang="scss" scoped>
+<style scoped lang="scss">
 .book__item {
   padding: 15px;
   border-radius: 15px;
@@ -104,6 +117,22 @@ onMounted(() => {
 
     span {
       font-size: 14px;
+    }
+  }
+
+  .btn {
+    border: none;
+    background: none;
+    color: #fff;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+
+    &:hover {
+      opacity: 0.6;
     }
   }
 }

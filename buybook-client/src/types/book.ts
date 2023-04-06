@@ -15,8 +15,10 @@ export interface IBook {
 }
 
 export interface IComment {
-  postId: string
+  _id: string
   comment: string
+  createdAt: Date
+  updatedAt: Date
 }
 
 export interface IFetchBooks {
